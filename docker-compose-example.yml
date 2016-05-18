@@ -1,0 +1,74 @@
+version: '2'
+
+services:
+
+### Nginx Server Container ##################################
+
+    nginx:
+        build: ./nginx
+        volumes_from:
+            - hhvm
+        volumes:
+            - ./logs/nginx/:/var/log/nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        links:
+            - hhvm
+
+### HHVM Container ###########################################
+
+    hhvm:
+        build: ./hhvm
+        volumes:
+            - ./www:/var/www
+            - ./logs/hhvm/:/var/log/hhvm
+        expose:
+            - "9001"
+        links:
+            - mariadb
+
+### PHP Container ###########################################
+
+    php:
+        build: ./php
+        volumes:
+            - ./www:/var/www
+            - ./logs/php/:/usr/local/var/log
+        expose:
+            - "9000"
+        links:
+            - mariadb
+
+### DATA Container ##########################################
+
+    data:
+        build: ./data
+        volumes:
+            - ./mysql-data:/var/lib/mysql
+            - ./redis-data:/var/lib/redis
+
+### MariaDB Container #######################################
+
+    mariadb:  
+        build: ./mariadb
+        volumes_from:
+            - data
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: maria_edd
+            MYSQL_USER: maria_edd
+            MYSQL_PASSWORD: 79JamjuZGfs3N8qH
+            MYSQL_ROOT_PASSWORD: BGCkru119201!
+
+### Redis Container #########################################
+
+    redis:
+        build: ./redis
+        volumes_from:
+            - data
+        ports:
+            - "6379:6379"
+            
+### Add more Containers below ###############################
