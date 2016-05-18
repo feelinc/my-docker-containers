@@ -1,0 +1,6 @@
+/logs
+/mysql-data
+/nginx/ssl
+/redis-data
+/docker-compose.yml
+/sudo
