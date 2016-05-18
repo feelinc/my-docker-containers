@@ -10,3 +10,7 @@ docker-compose up -d
 
 Stop :
 docker-compose stop
+
+You can switch to use PHP-FPM or HHVM in nginx/site.conf, choose between hhvm.conf or php-fpm.conf
+
+You can also switch the PHP-FPM version.
