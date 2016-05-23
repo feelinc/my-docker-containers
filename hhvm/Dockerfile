@@ -28,6 +28,8 @@ ADD ./supervisor-hhvm.conf /etc/supervisor/conf.d/
 
 RUN usermod -u 1000 www-data
 
+RUN chown www-data:1000 /var/run/hhvm
+
 WORKDIR /var/www
 
 CMD ["supervisord", "-n"]
